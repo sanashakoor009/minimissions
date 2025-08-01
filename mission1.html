@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mission 1: Number Ninja</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #fef8e7;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #ff6347;
+    }
+    .question {
+      font-size: 24px;
+      margin: 20px;
+    }
+    button {
+      font-size: 20px;
+      margin: 10px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background-color: #ffb347;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #ff7f50;
+    }
+    #result {
+      font-size: 22px;
+      margin-top: 20px;
+    }
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      font-size: 18px;
+      text-decoration: none;
+      color: #ff6347;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧮 Number Ninja!</h1>
+  <p class="question">What is 7 + 5?</p>
+  <button onclick="checkAnswer(10)">10</button>
+  <button onclick="checkAnswer(12)">12</button>
+  <button onclick="checkAnswer(14)">14</button>
+  <p id="result"></p>
+
+  <a href="index.html">← Back to Missions</a> | 
+  <a href="mission2.html">Next Mission →</a>
+
+  <script>
+    function checkAnswer(ans) {
+      const result = document.getElementById("result");
+      if (ans === 12) {
+        result.textContent = "✅ Great job!";
+        result.style.color = "green";
+      } else {
+        result.textContent = "❌ Try again!";
+        result.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>

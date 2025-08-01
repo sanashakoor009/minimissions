@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mission 2: Memory Match</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #e0f7fa;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #00796b;
+    }
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(4, 80px);
+      grid-gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .card {
+      width: 80px;
+      height: 80px;
+      background-color: #00897b;
+      color: white;
+      font-size: 40px;
+      line-height: 80px;
+      border-radius: 12px;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.5s;
+    }
+    .card.flipped {
+      background-color: #4db6ac;
+      transform: rotateY(180deg);
+      cursor: default;
+    }
+    #message {
+      font-size: 20px;
+      margin-top: 20px;
+      min-height: 24px;
+    }
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      font-size: 18px;
+      text-decoration: none;
+      color: #00796b;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Memory Match!</h1>
+  <p>Click cards to find matching pairs.</p>
+  <div class="card-container" id="gameBoard"></div>
+  <p id="message"></p>
+
+  <a href="index.html">← Back to Missions</a> | 
+  <a href="mission3.html">Next Mission →</a>
+
+  <script>
+    const cards = ['🐱', '🐶', '🐱', '🐶', '🦄', '🦊', '🦄', '🦊'];
+    let flippedCards = [];
+    let matchedCount = 0;
+    const gameBoard = document.getElementById('gameBoard');
+    const message = document.getElementById('message');
+
+    // Shuffle cards
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function createBoard() {
+      shuffle(cards);
+      gameBoard.innerHTML = '';
+      cards.forEach((emoji, index) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.dataset.emoji = emoji;
+        card.dataset.index = index;
+        card.textContent = '';
+        card.addEventListener('click', flipCard);
+        gameBoard.appendChild(card);
+      });
+    }
+
+    function flipCard() {
+      if (flippedCards.length === 2 || this.classList.contains('flipped')) return;
+      this.textContent = this.dataset.emoji;
+      this.classList.add('flipped');
+      flippedCards.push(this);
+
+      if (flippedCards.length === 2) {
+        if (flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
+          message.textContent = '✅ You found a pair!';
+          matchedCount += 2;
+          flippedCards = [];
+          if (matchedCount === cards.length) {
+            message.textContent = '🎉 You matched all pairs! Mission Complete!';
+          }
+        } else {
+          message.textContent = '❌ Try again!';
+          setTimeout(() => {
+            flippedCards.forEach(card => {
+              card.textContent = '';
+              card.classList.remove('flipped');
+            });
+            flippedCards = [];
+            message.textContent = '';
+          }, 1000);
+        }
+      }
+    }
+
+    createBoard();
+  </script>
+</body>
+</html>

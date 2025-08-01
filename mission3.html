@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mission 3: Puzzle Pop</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #fff3e0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ff6f00;
+        }
+
+        .puzzle {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            max-width: 260px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .piece {
+            width: 80px;
+            height: 80px;
+            background-color: #ffa726;
+            margin: 5px;
+            border-radius: 12px;
+            line-height: 80px;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s;
+        }
+
+        .piece:hover {
+            background-color: #fb8c00;
+        }
+
+        #result {
+            font-size: 22px;
+            margin-top: 30px;
+            min-height: 28px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            font-size: 18px;
+            text-decoration: none;
+            color: #ff6f00;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧩 Puzzle Pop!</h1>
+    <p>Click the pieces in order from 1 to 6.</p>
+
+    <div class="puzzle" id="puzzle"></div>
+    <p id="result"></p>
+
+    <a href="index.html">← Back to Missions</a>
+
+    <script>
+        const puzzleContainer = document.getElementById('puzzle');
+        const result = document.getElementById('result');
+
+        // Pieces shuffled order
+        const piecesOrder = [3, 1, 5, 2, 6, 4];
+        let currentStep = 1;
+
+        function createPuzzle() {
+            piecesOrder.forEach(number => {
+                const piece = document.createElement('div');
+                piece.classList.add('piece');
+                piece.textContent = number;
+                piece.addEventListener('click', () => {
+                    if (number === currentStep) {
+                        piece.style.backgroundColor = '#66bb6a';
+                        piece.style.cursor = 'default';
+                        currentStep++;
+                        result.textContent = `✅ Great! Next: ${currentStep <= 6 ? currentStep : 'All done!'}`;
+                        if (currentStep > 6) {
+                            result.textContent = '🎉 You solved the puzzle! Mission Complete!';
+                        }
+                    } else {
+                        result.textContent = '❌ Try the next number in order!';
+                    }
+                });
+                puzzleContainer.appendChild(piece);
+            });
+        }
+
+        createPuzzle();
+    </script>
+</body>
+
+</html>
